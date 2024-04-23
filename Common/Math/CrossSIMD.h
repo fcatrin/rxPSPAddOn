@@ -40,7 +40,7 @@
 // Compatibility wrappers making ARM64 NEON code run on ARM32
 // With optimization on, these should compile down to the optimal code.
 
-inline float32x4_t vmulq_laneq_f32(float32x4_t a, float32x4_t b, int lane) {
+static inline float32x4_t vmulq_laneq_f32(float32x4_t a, float32x4_t b, int lane) {
 	switch (lane & 3) {
 	case 0: return vmulq_lane_f32(a, vget_low_f32(b), 0);
 	case 1: return vmulq_lane_f32(a, vget_low_f32(b), 1);
