@@ -603,7 +603,7 @@ void EmuScreen::sendMessage(UIMessage message, const char *value) {
 				// If it's a TV (so no built-in back button), and there's no back button mapped to a pad,
 				// use this as the fallback way to get into the menu.
 
-				screenManager()->push(new GamePauseScreen(gamePath_));
+				// screenManager()->push(new GamePauseScreen(gamePath_));
 			}
 		}
 	} else if (message == UIMessage::REQUEST_PLAY_SOUND) {
