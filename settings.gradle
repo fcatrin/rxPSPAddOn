@@ -1,1 +1,4 @@
 include ':android'
+include ':xtvApps'
+include ':xtvVirtualFile'
+include ':retroxUtils'

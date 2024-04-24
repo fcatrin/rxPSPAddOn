@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 
 android {
+	namespace 'retrobox'
     compileSdkVersion 26
     buildToolsVersion "30.0.3"
 
