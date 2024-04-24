@@ -24,9 +24,6 @@ android {
 	flavorDimensions "variant"
 	namespace 'org.ppsspp.ppsspp'
 	signingConfigs {
-		debug {
-			storeFile file("debug.keystore")
-		}
 		optimized {
 			storeFile file("debug.keystore")
 		}
@@ -49,7 +46,7 @@ android {
 	ndkVersion "21.4.7075529"
 
 	defaultConfig {
-		applicationId 'org.ppsspp.ppsspp'
+		applicationId 'retrobox.v2.ppsspp'
 		if (androidGitVersion.name() != "unknown" && androidGitVersion.code() >= 14000000) {
 			// Start using automatic Android version numbers from version 1.4.
 			println "Overriding Android Version Name, Code: " + androidGitVersion.name() + " " + androidGitVersion.code()
@@ -68,13 +65,11 @@ android {
 			versionCode ANDROID_VERSION_CODE
 			versionName ANDROID_VERSION_NAME
 		}
-		signingConfig signingConfigs.debug
 	}
 	buildTypes {
 		debug {
 			minifyEnabled = false
 			jniDebuggable true
-			signingConfig signingConfigs.debug
 		}
 		optimized {
 			// Debug signed but optimized.
@@ -119,7 +114,7 @@ android {
 	}
 	productFlavors {
 		normal {
-			applicationId 'org.ppsspp.ppsspp'
+			applicationId 'retrobox.v2.ppsspp'
 			dimension "variant"
 			externalNativeBuild {
 				cmake {
