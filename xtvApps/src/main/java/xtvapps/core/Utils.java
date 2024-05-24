@@ -24,6 +24,8 @@ import java.util.zip.ZipFile;
 
 import android.content.Context;
 
+import xtapps.core.R;
+
 public final class Utils {
 	private static final String LOGTAG = Utils.class.getSimpleName();
 	private static final int BUF_SIZE = 65536;
