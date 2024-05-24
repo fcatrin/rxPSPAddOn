@@ -196,6 +196,8 @@ if (project.hasProperty("f_droid")) {
 	project.android.sourceSets.main.java.srcDirs += 'libs/MogaStubs'
 } else {
 	project.dependencies {
+		implementation project(':xtvApps')
+		implementation project(':retroXUtils')
 		implementation files('libs/com.bda.controller.jar')
 	}
 }
