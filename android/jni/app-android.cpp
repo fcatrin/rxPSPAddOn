@@ -99,6 +99,7 @@ struct JNIEnv {};
 #include "Common/CPUDetect.h"
 #include "Common/Log.h"
 #include "UI/GameInfoCache.h"
+#include "Core/SaveState.h"
 
 #include "app-android.h"
 
@@ -145,6 +146,9 @@ static int sampleRate = 0;
 static int framesPerBuffer = 0;
 static int androidVersion;
 static int deviceType;
+
+static Path game_name;
+static int save_slot = 0;
 
 // Should only be used for display detection during startup (for config defaults etc)
 // This is the ACTUAL display size, not the hardware scaled display size.
@@ -796,6 +800,7 @@ extern "C" void Java_org_ppsspp_ppsspp_NativeApp_init
 	}
 
 	NativeInit((int)args.size(), &args[0], user_data_path.c_str(), externalStorageDir.c_str(), cacheDir.c_str());
+    game_name = Path(shortcut_param.c_str());
 
 	// In debug mode, don't allow creating software Vulkan devices (reject by VulkaMaybeAvailable).
 	// Needed for #16931.
@@ -900,6 +905,35 @@ bool System_AudioRecordingIsAvailable() {
 
 bool System_AudioRecordingState() {
 	return AndroidAudio_Recording_State(g_audioState);
+}
+
+extern "C" void Java_org_ppsspp_ppsspp_NativeApp_saveState(
+        JNIEnv *env, jclass) {
+    SaveState::SaveSlot(game_name, save_slot, SaveState::Callback());
+}
+
+extern "C" void Java_org_ppsspp_ppsspp_NativeApp_loadState(
+        JNIEnv *env, jclass) {
+    SaveState::LoadSlot(game_name, save_slot, SaveState::Callback());
+}
+
+extern "C" void Java_org_ppsspp_ppsspp_NativeApp_setStateSlot(
+        JNIEnv *env, jclass, jint slot) {
+    save_slot = slot;
+}
+
+extern "C" jstring Java_org_ppsspp_ppsspp_NativeApp_getGameId(
+        JNIEnv *env, jclass) {
+    std::string gameId = SaveState::GetFullDiskId(game_name);
+    return env->NewStringUTF(gameId.c_str());
+}
+
+extern "C" jboolean Java_org_ppsspp_ppsspp_NativeApp_takeScreenshot(
+        JNIEnv *env, jclass, jstring jpath) {
+
+    std::string path = GetJavaString(env, jpath);
+    SaveState::SaveScreenshot(Path(path.c_str()), SaveState::Callback(), 0);
+    return true;
 }
 
 extern "C" void Java_org_ppsspp_ppsspp_NativeApp_resume(JNIEnv *, jclass) {

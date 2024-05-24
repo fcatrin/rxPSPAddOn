@@ -520,6 +520,11 @@ namespace SaveState
 		return filename.GetFilename() + " " + sy->T("(broken)");
 	}
 
+    std::string GetFullDiskId(const Path &gameFilename) {
+        std::string discId = g_paramSFO.GetValueString("DISC_ID");
+        return discId;
+    }
+
 	std::string GenerateFullDiscId(const Path &gameFilename) {
 		std::string discId = g_paramSFO.GetValueString("DISC_ID");
 		std::string discVer = g_paramSFO.GetValueString("DISC_VERSION");

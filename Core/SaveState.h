@@ -52,12 +52,18 @@ namespace SaveState
 	bool UndoSaveSlot(const Path &gameFilename, int slot);
 	bool UndoLastSave(const Path &gameFilename);
 	bool UndoLoad(const Path &gameFilename, Callback callback, void *cbUserData = 0);
+
+    std::string GetFullDiskId(const Path &gameFilename);
+
 	// Checks whether there's an existing save in the specified slot.
 	bool HasSaveInSlot(const Path &gameFilename, int slot);
 	bool HasUndoSaveInSlot(const Path &gameFilename, int slot);
 	bool HasUndoLastSave(const Path &gameFilename);
 	bool HasUndoLoad(const Path &gameFilename);
 	bool HasScreenshotInSlot(const Path &gameFilename, int slot);
+
+    // Enqueue save screenshot, used to make sure that is OK with the app life cycle
+    void SaveScreenshot(const Path &filename, Callback callback, void *cbUserData);
 
 	int GetCurrentSlot();
 
